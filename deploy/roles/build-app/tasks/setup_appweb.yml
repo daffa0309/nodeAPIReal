@@ -1,0 +1,12 @@
+---
+- name: Upload apache configuration
+  block:
+  - copy:
+      src: files/apache-api_periksa_id-conf
+      dest: /etc/apache2/sites-enabled/api_periksa_id.conf
+    notify: Restart apache service
+  - file:
+      path: /etc/apache2/sites-enabled/000-default.conf
+      state: absent
+    notify: Restart apache service
+  become: yes

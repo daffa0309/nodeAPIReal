@@ -1,0 +1,13 @@
+---
+- name: Copy npm-api.service file
+  template:
+    src: templates/npm-api_service.j2
+    dest: /etc/systemd/system/npm-api.service
+  become: yes
+
+- name: restart npm-api service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: npm-api
+  become: yes

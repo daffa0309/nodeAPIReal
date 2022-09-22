@@ -1,0 +1,11 @@
+---
+- hosts: visidata
+  vars:
+    appdir: /vagrant
+    dbhost: 231.23.423.43
+
+  roles:
+  - common
+  - nodejs
+  - apache
+  - build-app

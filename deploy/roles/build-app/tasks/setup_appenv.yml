@@ -1,0 +1,26 @@
+---
+- name: Install packages based on package.json.
+  npm:
+    path: "{{ appdir }}"
+
+- name: copy env to homedir
+  copy:
+    src: files/dotenv
+    dest: "{{ appdir }}/dotenv"
+
+- name: set link dotenv into ~/.env
+  file:
+    src: "{{ appdir }}/dotenv"
+    dest: "{{ ansible_env.HOME }}/.env"
+    state: link
+
+- name: make sure env loaded every login
+  block:
+  - shell: grep '^source .env' {{ ansible_env.HOME }}/.profile
+    register: envsourced
+    ignore_errors: yes
+
+  - lineinfile:
+      path: "{{ ansible_env.HOME }}/.profile"
+      line: "source .env"
+    when: envsourced.stdout == ""

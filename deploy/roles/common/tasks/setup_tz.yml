@@ -1,0 +1,11 @@
+---
+- name: set timezone to Asia/Jakarta
+  timezone:
+    name: Asia/Jakarta
+  become: yes
+
+- name: Restart service cron, in all cases
+  service:
+    name: cron
+    state: restarted
+  become: yes

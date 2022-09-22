@@ -1,0 +1,17 @@
+---
+- name: Prepare the app directory
+  block:
+  - file:
+      path: "{{ appdir }}"
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0775
+      recurse: yes
+    become: yes
+  - git:
+      repo: git@bitbucket.org:periksaid/periksa_api.git
+      dest: "{{ appdir }}"
+      force: yes
+      ssh_opts: "-o StrictHostKeyChecking=no"
+  when: not isvagrant

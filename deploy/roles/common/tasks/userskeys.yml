@@ -1,0 +1,36 @@
+---
+- name: create user efaisal
+  user:
+    name: efaisal
+    shell: /bin/bash
+    groups: ubuntu,sudo
+    append: yes
+  become: true
+
+- name: Add ssh keys
+  authorized_key:
+    user: efaisal
+    state: present
+    key: '{{ item }}'
+  become: true
+  with_file:
+  - roles/common/files/efaisal_asok.pub
+  - roles/common/files/efaisal_dilbert.pub
+
+  - name: Add ssh keys
+  authorized_key:
+    user: sutanhanifah
+    state: present
+    key: '{{ item }}'
+  become: true
+  with_file:
+  - roles/common/files/sutanhanifah.pub
+
+- name: Add to sudoers
+  copy:
+    src: roles/common/files/sudogrp
+    dest: /etc/sudoers.d/80-sudogrp
+    owner: root
+    group: root
+    mode: 0440
+  become: true

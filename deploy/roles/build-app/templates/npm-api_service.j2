@@ -1,0 +1,14 @@
+[Service]
+WorkingDirectory={{ appdir }}
+EnvironmentFile={{ appdir }}/dotenv
+ExecStart=/usr/bin/npm run start:dev
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=npm-api
+User={{ ansible_env.USER }}
+Group={{ ansible_env.USER }}
+Environment=NODE_ENV=dev
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+---
+- name: download NodeJS installer
+  uri:
+    url: https://deb.nodesource.com/setup_10.x
+    method: GET
+    dest: /tmp/nodesource_setup.sh
+  ignore_errors: yes
+
+- name: set executable bit
+  file:
+    path: /tmp/nodesource_setup.sh
+    mode: "ugo=x"
+
+- name: blindly execute the file in shell
+  shell: /tmp/nodesource_setup.sh
+  become: yes
+
+- name: install NodeJS
+  apt:
+    name: nodejs
+    state: present
+    update_cache: yes
+  become: yes

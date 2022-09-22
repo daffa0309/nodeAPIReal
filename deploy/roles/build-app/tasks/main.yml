@@ -1,0 +1,5 @@
+---
+- include: setup_appdir.yml
+- include: setup_appenv.yml
+- include: setup_appsvc.yml
+- include: setup_appweb.yml
